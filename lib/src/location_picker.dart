@@ -3,15 +3,14 @@ import 'dart:convert';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_map/flutter_map.dart';
-import 'package:flutter_map_location_marker/flutter_map_location_marker.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:http/http.dart' as http;
 import 'package:intl/intl.dart' as intl;
 import 'package:latlong2/latlong.dart';
 
+import 'classes.dart';
 import 'widgets/copyright_osm_widget.dart';
 import 'widgets/wide_button.dart';
-import 'classes.dart';
 
 /// Principal widget to show Flutter map using osm api with pick up location marker and search bar.
 /// you can track you current location, search for a location and select it.
@@ -73,10 +72,6 @@ class FlutterLocationPicker extends StatefulWidget {
   /// [trackMyPosition] : (bool) if is true, map will track your your location on the map initialization and makes inittial position of the pointer your current location (default = false)
   ///
   final bool trackMyPosition;
-
-  /// [showCurrentLocationPointer] : (bool) if is true, your current location will be shown on the map (default = true)
-  ///
-  final bool showCurrentLocationPointer;
 
   /// [showZoomController] : (bool) enable/disable zoom in and zoom out buttons (default = true)
   ///
@@ -237,7 +232,6 @@ class FlutterLocationPicker extends StatefulWidget {
     this.showZoomController = true,
     this.showLocationController = true,
     this.showSelectLocationButton = true,
-    this.showCurrentLocationPointer = true,
     this.selectLocationButtonStyle,
     this.selectLocationButtonWidth,
     this.selectLocationButtonHeight,
@@ -691,19 +685,8 @@ class _FlutterLocationPickerState extends State<FlutterLocationPicker>
           backgroundColor:
               widget.mapLoadingBackgroundColor ?? const Color(0xFFE0E0E0),
         ),
-        if (widget.showCurrentLocationPointer) _buildCurrentLocation(),
       ],
     ));
-  }
-
-  Widget _buildCurrentLocation() {
-    return CurrentLocationLayer(
-      style: const LocationMarkerStyle(
-        markerDirection: MarkerDirection.heading,
-        headingSectorRadius: 60,
-        markerSize: Size(18, 18),
-      ),
-    );
   }
 
   Widget _buildMarker() {
